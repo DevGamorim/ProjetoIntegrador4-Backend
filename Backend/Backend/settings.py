@@ -31,15 +31,30 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #3rd party
+    "allauth",
+    "allauth.account",
+    'rest_framework',
+    'corsheaders',
+
+    #My apps
+    'Data',
+    'Endpoint',
+
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,8 +90,12 @@ WSGI_APPLICATION = 'Backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'CLIENT': {
+            "host":"mongodb+srv://fergamorim:HOgLeGFqrwpZ1rQE@data.illffwc.mongodb.net/?retryWrites=true&w=majority",
+            "name":"ProjetoIntegrador",
+            "authMechanism":"SCRAM-SHA-1"
+        }
     }
 }
 
@@ -99,11 +118,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
 
@@ -111,6 +135,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+# User models 
+
+AUTH_USER_MODEL = 'Data.Users'
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
