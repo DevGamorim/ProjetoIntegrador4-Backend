@@ -11,4 +11,4 @@ class User(AbstractUser):
     UserFirstName = models.CharField(max_length=255)
     UserLastName = models.CharField(max_length=255)
     UserCPF = models.CharField(max_length=12)
-    UserStats = models.BooleanField(choices=UserStats)
+    UserStats = models.BooleanField(choices=UserStats, default=True)
