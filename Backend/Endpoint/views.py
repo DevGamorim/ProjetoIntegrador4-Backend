@@ -57,3 +57,10 @@ def edit_caixa(request):
     user = request.user
     edit = Caixas.objects.filter(GpUse=user).update(field1='some value')
     return 0
+
+class Login(TemplateView):
+    template_name = 'login/login.html'
+
+class Login(TemplateView):
+    template_name = 'login/forgot-password.html'
+    
