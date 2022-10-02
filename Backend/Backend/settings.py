@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-kixgr(0&vr*@0x50i@4w3i7si*j%+*%)14=95a(!igrn83(*cb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['127.0.0.1',
+    'fergamorim.pythonanywhere.com']
 
 
 # Application definition
