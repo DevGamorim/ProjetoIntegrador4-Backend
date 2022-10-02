@@ -49,11 +49,14 @@
                         {% endif %}
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'Endpoint:home' %}">Sair</a>
+                            <a class="nav-link" href="{% url 'account_logout' %}">Sair</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'Endpoint:home' %}">Entrar</a>
+                            <a class="nav-link" href="{% url 'account_login' %}">Entrar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_signup' %}">Cadastro</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="{% url 'Endpoint:home' %}">Cadastro</a>

@@ -7,7 +7,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 # Create your views here.
 
-from Data.models import Users, Financas, Groups, Caixas
+from Data.models import Financas, Groups, Caixas
+from users.models import User
 
 #@method_decorator(login_required, name='dispatch')
 class HomePageView(TemplateView):

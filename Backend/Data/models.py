@@ -3,19 +3,9 @@ from django.db import models
 from uuid import uuid4
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+
+from users.models import User
 # Create your models here.
-
-class Users(AbstractUser):
-    UserStats = (
-        (True,'Ativo'),
-        (False,'Inativo')
-    )
-
-    UserFirstName = models.CharField(max_length=255)
-    UserLastName = models.CharField(max_length=255)
-    UserCPF = models.CharField(max_length=12)
-    UserEmail = models.CharField(max_length=255)
-    UserStats = models.BooleanField(choices=UserStats)
 
 class Groups(models.Model):
     GpStats = (
@@ -24,7 +14,7 @@ class Groups(models.Model):
     )
 
     GpId = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    GpUse = models.ManyToManyField(Users, related_name="GrupoUsers")
+    GpUse = models.ManyToManyField(User, related_name="GrupoUsers")
     GpName = models.CharField(max_length=255)
     GpStats = models.BooleanField(choices=GpStats)
 
