@@ -109,7 +109,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Integrador',
-        'USER': 'fergamorim@Integrador',
+        'USER': 'fergamorim',
         'PASSWORD': 'ProjetoIntegrador4',
         'HOST': 'fergamorim.mysql.pythonanywhere-services.com',
         'PORT': '3306',
