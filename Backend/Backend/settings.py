@@ -111,7 +111,7 @@ DATABASES = {
         'NAME': 'Integrador',
         'USER': 'fergamorim',
         'PASSWORD': 'ProjetoIntegrador4',
-        'HOST': '10.0.0.69',
+        'HOST': 'fergamorim.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
 }
