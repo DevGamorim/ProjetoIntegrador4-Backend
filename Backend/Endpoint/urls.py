@@ -13,4 +13,6 @@ urlpatterns =[
     path('grupo/', views.group.as_view(), name='grupo' ),
     path('novogrupo/', views.create_group, name='novogrupo' ),
     path('meusgrupos/', views.list_group, name='meusgrupos' ),
+    path('login/', views.login.as_view(), name='login' ),
+    path('forgot-password/', views.forgot-password.as_view(), name='forgot-password' ),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
