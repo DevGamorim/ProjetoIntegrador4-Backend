@@ -94,17 +94,27 @@ WSGI_APPLICATION = 'Backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'djongo',
+#        'CLIENT': {
+#            "host":"mongodb+srv://fergamorim:HOgLeGFqrwpZ1rQE@data.illffwc.mongodb.net/?retryWrites=true&w=majority",
+#            "name":"ProjetoIntegrador",
+#            "authMechanism":"SCRAM-SHA-1"
+#        }
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'CLIENT': {
-            "host":"mongodb+srv://fergamorim:HOgLeGFqrwpZ1rQE@data.illffwc.mongodb.net/?retryWrites=true&w=majority",
-            "name":"ProjetoIntegrador",
-            "authMechanism":"SCRAM-SHA-1"
-        }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Integrador',
+        'USER': 'fergamorim',
+        'PASSWORD': 'ProjetoIntegrador4',
+        'HOST': '10.0.0.69',
+        'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
