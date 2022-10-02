@@ -13,10 +13,25 @@ from Data.models import Users, Financas, Groups, Caixas
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
+class group(TemplateView):
+    template_name = 'grupo/grupo.html'
+
 def create_group(request):
+    user = str(request.user)
+    if request.method == 'GET':
+        return render(request, 'grupo/criar_grupo.html')
+    if request.method == 'POST':
+        tudo = request.POST.copy()
+        print(str(user))
+        print(tudo)
+        
+        novo_grupo = Groups.objects.create(GpUse=[user, tudo["GpUse"][0]], GpName=tudo["GpName"][0], GpStats=["GpStats"][0])
+        return render(request, 'grupo/criar_grupo.html')
+
+def list_group(request):
     user = request.user
     novo_grupo = Groups.objects.create()
-    return 0
+    return render(request, 'grupo/grupo.html')
 
 def edit_group(request):
     user = request.user
@@ -25,7 +40,7 @@ def edit_group(request):
 
 def create_financas(request):
     user = request.user
-    novo_grupo = Financas.objects.create()
+    edit = Groups.objects.filter(GpUse=user)
     return 0
 
 def edit_financas(request):

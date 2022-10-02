@@ -24,7 +24,7 @@ class Groups(models.Model):
     )
 
     GpId = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    GpUse = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="GrupoUsers")
+    GpUse = models.ManyToManyField(Users, related_name="GrupoUsers")
     GpName = models.CharField(max_length=255)
     GpStats = models.BooleanField(choices=GpStats)
 
@@ -53,7 +53,7 @@ class Caixas(models.Model):
     )
 
     CaixaID = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    CaixaFinanca = models.ForeignKey(Financas, on_delete=models.CASCADE)
+    CaixaFinanca = models.ManyToManyField(Financas)
     CaixaTotal = models.FloatField()
     CaixaStats = models.BooleanField(choices=CaixaStats)
 

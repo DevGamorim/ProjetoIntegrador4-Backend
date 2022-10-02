@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Novo Grupo{% endblock %}
+
+{% block content %}
+    <form action="{% url 'Endpoint:novogrupo' %}" method='post'>
+        {% csrf_token %}
+        <div>
+            <label>Nome do grupo: </label>
+            <input id="GpName" name="GpName" type="text">
+        </div>
+        <div>
+            <label>Status do Grupo</label>
+            <select id="GpStats" name="GpStats">
+                <option value="True">Ativo</option>
+                <option value="False">inativo</option>
+            </select>
+        </div>
+        <div>
+            <label>Adicionar pessoas ao grupo:</label>
+            <input id="GpUse" name="GpUse" type="email" placeholder="joao@email.com">
+        </div>
+        <div>
+            <input type="submit" value="Salvar">
+        </div>
+
+    </form>
+{% endblock %}
