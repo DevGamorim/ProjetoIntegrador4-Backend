@@ -154,13 +154,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 VENV_PATH = os.path.dirname(BASE_DIR)
-STATIC_ROOT = os.path.join(VENV_PATH, 'static_root')
+STATIC_ROOT = os.path.join(VENV_PATH, 'static')
 
 LOGIN_REDIRECT_URL = '/'
 
