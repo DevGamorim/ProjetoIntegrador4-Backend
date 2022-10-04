@@ -46,7 +46,7 @@
 
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="#">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Dashboard</span></a>
                     </li>
@@ -68,9 +68,9 @@
                         </a>
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="#">Meus Grupos</a>
-                                <a class="collapse-item" href="#">Editar Grupos</a>
-                                <a class="collapse-item" href="#">Novo Grupo</a>
+                                <a class="collapse-item" href="{% url 'Endpoint:meusgrupos' %}">Meus Grupos</a>
+                                <a class="collapse-item" href="{% url 'Endpoint:meusgrupos' %}">Editar Grupos</a>
+                                <a class="collapse-item" href="{% url 'Endpoint:novogrupo' %}">Novo Grupo</a>
                             </div>
                         </div>
                     </li>
@@ -161,6 +161,27 @@
 
                         </nav>
                         <!-- End of Topbar -->
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
+
+                            {% block content %}
+                            {% endblock %}
+
+                    </div>
+                    <!-- End of Main Content -->
+
+                    <!-- Footer -->
+                    <footer style="bottom: 0; position: fixed; width: 90%; text-align: center;" class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Your Website 2021</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Footer -->
+
+                </div>
+                <!-- End of Content Wrapper -->
             {% else %}
                 <nav class="navbar navbar-expand navbar-dark bg-gradient-primary mb-3">
                     <div class="container">
@@ -178,10 +199,6 @@
             {% endif %}
         </div>
     </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
