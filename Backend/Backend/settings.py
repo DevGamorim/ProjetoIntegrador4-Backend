@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "crispy_forms",
-    #'rest_framework',
+    'rest_framework',
     #'corsheaders',
 
     #My apps
@@ -105,16 +105,14 @@ DATABASES = {
    }
 }
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'fergamorim$Integrador',
-#        'USER': 'fergamorim',
-#        'PASSWORD': 'ProjetoIntegrador4',
-#        'HOST': 'fergamorim.mysql.pythonanywhere-services.com',
-#        'PORT': '3306',
-#    }
-#}
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -134,11 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
