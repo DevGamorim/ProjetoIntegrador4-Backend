@@ -5,10 +5,23 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
-from Data.models import Financas, Groups, Caixas
+from Data.models import Financas, Groups, Caixas, Comentario, Selic
 from users.models import User
+
+# libs import
+import requests
+from datetime import datetime
+import json
+
+
+url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial=18/10/2022&dataFinal=18/10/2022"
+response = requests.request("GET", url)
+response = response.text.encode('utf8')
+response = json.loads(response)
+print(response)
 
 #@method_decorator(login_required, name='dispatch')
 class HomePageView(TemplateView):

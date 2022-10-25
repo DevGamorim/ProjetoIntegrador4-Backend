@@ -8,6 +8,7 @@ class User(AbstractUser):
         (False,'Inativo')
     )
 
+    UserId = models.AutoField(primary_key=True, editable=False, auto_created=True)
     UserFirstName = models.CharField(max_length=255)
     UserLastName = models.CharField(max_length=255)
     UserCPF = models.CharField(max_length=12)

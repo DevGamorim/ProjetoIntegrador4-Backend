@@ -13,7 +13,7 @@ class Groups(models.Model):
         (False,'Inativo')
     )
 
-    GpId = models.IntegerField(primary_key=True, editable=False)
+    GpId = models.AutoField(primary_key=True, editable=False, auto_created=True)
     GpUse = models.ManyToManyField(User, related_name="GrupoUsers")
     GpName = models.CharField(max_length=255)
     GpStats = models.BooleanField(choices=GpStats)
@@ -28,7 +28,7 @@ class Financas(models.Model):
         (False,'Inativo')
     )
 
-    FinancaID = models.IntegerField(primary_key=True, editable=False)
+    FinancaID = models.AutoField(primary_key=True, editable=False, auto_created=True)
     FinancaGroup = models.ForeignKey(Groups, on_delete=models.CASCADE)
     FinancaType = models.BooleanField(choices=FinancaType)
     FinancaValue = models.FloatField()
@@ -42,18 +42,18 @@ class Caixas(models.Model):
         (False,'Inativo')
     )
 
-    CaixaID = models.IntegerField(primary_key=True, editable=False)
+    CaixaID = models.AutoField(primary_key=True, editable=False, auto_created=True)
     CaixaFinanca = models.ManyToManyField(Financas)
     CaixaTotal = models.FloatField()
     CaixaStats = models.BooleanField(choices=CaixaStats)
 
 class Comentario(models.Model):
-    CmID = models.IntegerField(primary_key=True, default=uuid4, editable=False)
+    CmID = models.AutoField(primary_key=True, editable=False, auto_created=True)
     CmUser = models.ForeignKey(User, on_delete=models.CASCADE)
     CmMessage = models.CharField(max_length=255)
     CmScore = models.FloatField()
 
 class Selic(models.Model):
-    SlID = models.IntegerField(primary_key=True, editable=False)
+    SlID = models.AutoField(primary_key=True, editable=False, auto_created=True)
     Slvalue = models.FloatField()
     SlLastUpdate = models.DateTimeField(null=True)
