@@ -7,16 +7,21 @@ from django.contrib.auth.models import AbstractUser
 from users.models import User
 # Create your models here.
 
+
+
 class Groups(models.Model):
     GpStats = (
         (True,'Ativo'),
         (False,'Inativo')
     )
-
     GpId = models.AutoField(primary_key=True, editable=False, auto_created=True)
-    GpUse = models.ManyToManyField(User, related_name="GrupoUsers")
     GpName = models.CharField(max_length=255)
     GpStats = models.BooleanField(choices=GpStats)
+
+class UserGroups(models.Model):
+    UsGpId = models.AutoField(primary_key=True, editable=False, auto_created=True)
+    GpUse = models.ForeignKey(User, on_delete=models.CASCADE)
+    Groups = models.ForeignKey(Groups, on_delete=models.CASCADE)
 
 class Financas(models.Model):
     FinancaType = (
@@ -36,6 +41,8 @@ class Financas(models.Model):
     FinancaDateUpdate = models.DateTimeField(auto_now=True,unique=False, null=True)
     FinancaStats = models.BooleanField(choices=FinancaStats)
 
+
+
 class Caixas(models.Model):
     CaixaStats = (
         (True,'Ativo'),
@@ -43,7 +50,7 @@ class Caixas(models.Model):
     )
 
     CaixaID = models.AutoField(primary_key=True, editable=False, auto_created=True)
-    CaixaFinanca = models.ManyToManyField(Financas)
+    CaixaFinanca = models.ForeignKey(Financas, on_delete=models.CASCADE)
     CaixaTotal = models.FloatField()
     CaixaStats = models.BooleanField(choices=CaixaStats)
 

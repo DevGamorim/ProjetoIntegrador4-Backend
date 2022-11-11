@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Novo Grupo - Aviso{% endblock %}
+
+{% block content %}
+<div>
+    {% for email in aviso_email %}
+    <p>
+        E-mail {{email}} não encontrado, convite enviado para e-mail. 
+    </p>
+    {% endfor %}
+</div>
+{% endblock %}

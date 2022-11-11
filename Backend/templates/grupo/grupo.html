@@ -3,6 +3,16 @@
 {% block title %}Grupos{% endblock %}
 
 {% block content %}
-    <div><a href="{% url 'Endpoint:novogrupo' %}">Novo Grupo</a></div>
-    <div><a href="{% url 'Endpoint:meusgrupos' %}">Meus Grupos</a></div>
+    <div>
+        <div><a href="{% url 'Endpoint:novogrupo' %}">Novo Grupo</a></div>
+        <div><a href="{% url 'Endpoint:meusgrupos' %}">Meus Grupos</a></div>
+    </div>
+    <div style="margin-top: 20px;">
+        {% for gp in grupos %}
+            <p>
+                {{gp.Groups.GpName}}
+            </p>
+        {% endfor %}
+    </div>
+    
 {% endblock %}
