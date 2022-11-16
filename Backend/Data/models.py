@@ -7,8 +7,6 @@ from django.contrib.auth.models import AbstractUser
 from users.models import User
 # Create your models here.
 
-
-
 class Groups(models.Model):
     GpStats = (
         (True,'Ativo'),
@@ -23,6 +21,16 @@ class UserGroups(models.Model):
     GpUse = models.ForeignKey(User, on_delete=models.CASCADE)
     Groups = models.ForeignKey(Groups, on_delete=models.CASCADE)
 
+class Caixas(models.Model):
+    CaixaStats = (
+        (True,'Ativo'),
+        (False,'Inativo')
+    )
+    CaixaGrupo = models.ForeignKey(Groups, on_delete=models.CASCADE)
+    CaixaID = models.AutoField(primary_key=True, editable=False, auto_created=True)
+    CaixaTotal = models.FloatField()
+    CaixaStats = models.BooleanField(choices=CaixaStats)
+
 class Financas(models.Model):
     FinancaType = (
         (True,'Entrada'),
@@ -34,7 +42,8 @@ class Financas(models.Model):
     )
 
     FinancaID = models.AutoField(primary_key=True, editable=False, auto_created=True)
-    FinancaGroup = models.ForeignKey(Groups, on_delete=models.CASCADE)
+    FinancaUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    CaixaFinanca = models.ForeignKey(Caixas, on_delete=models.CASCADE)
     FinancaType = models.BooleanField(choices=FinancaType)
     FinancaValue = models.FloatField()
     FinancaDateCreate = models.DateTimeField(auto_now_add=True,unique=False, null=True)
@@ -42,17 +51,6 @@ class Financas(models.Model):
     FinancaStats = models.BooleanField(choices=FinancaStats)
 
 
-
-class Caixas(models.Model):
-    CaixaStats = (
-        (True,'Ativo'),
-        (False,'Inativo')
-    )
-
-    CaixaID = models.AutoField(primary_key=True, editable=False, auto_created=True)
-    CaixaFinanca = models.ForeignKey(Financas, on_delete=models.CASCADE)
-    CaixaTotal = models.FloatField()
-    CaixaStats = models.BooleanField(choices=CaixaStats)
 
 class Comentario(models.Model):
     CmID = models.AutoField(primary_key=True, editable=False, auto_created=True)

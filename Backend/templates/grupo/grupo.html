@@ -7,10 +7,11 @@
         <div><a href="{% url 'Endpoint:novogrupo' %}">Novo Grupo</a></div>
         <div><a href="{% url 'Endpoint:meusgrupos' %}">Meus Grupos</a></div>
     </div>
+    <hr class="sidebar-divider my-0">
     <div style="margin-top: 20px;">
         {% for gp in grupos %}
             <p>
-                {{gp.Groups.GpName}}
+                <a href="/editargrupo/{{gp.Groups.GpId}}" >{{gp.Groups.GpName}}</a>
             </p>
         {% endfor %}
     </div>

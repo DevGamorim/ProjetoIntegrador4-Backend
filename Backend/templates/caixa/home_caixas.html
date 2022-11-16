@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Caixa{% endblock %}
+
+{% block content %}
+    <hr class="sidebar-divider my-0">
+    <div style="margin-top: 20px;">
+        {% for caixa in caixas %}
+            <p>
+                <a href="/vercarteira/{{caixa.CaixaID}}" >{{caixa.CaixaGrupo.GpName}}</a>
+            </p>
+        {% endfor %}
+    </div>
+    
+{% endblock %}

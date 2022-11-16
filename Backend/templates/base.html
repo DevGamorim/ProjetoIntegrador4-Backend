@@ -68,25 +68,7 @@
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
                                 <a class="collapse-item" href="{% url 'Endpoint:meusgrupos' %}">Meus Grupos</a>
-                                <a class="collapse-item" href="{% url 'Endpoint:meusgrupos' %}">Editar Grupos</a>
                                 <a class="collapse-item" href="{% url 'Endpoint:novogrupo' %}">Novo Grupo</a>
-                            </div>
-                        </div>
-                    </li>
-
-                    <!-- Nav Item - Utilities Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                            aria-expanded="true" aria-controls="collapseUtilities">
-                            <i class="fa-solid fa-chart-simple"></i>
-                            <span>Finaças</span>
-                        </a>
-                        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                            data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="#">Minhas Finanças</a>
-                                <a class="collapse-item" href="#">Editar Finanças</a>
-                                <a class="collapse-item" href="#">Nova Finança</a>
                             </div>
                         </div>
                     </li>
@@ -101,9 +83,7 @@
                         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="#">Minhas Carteiras</a>
-                                <a class="collapse-item" href="#">Editar Carteira</a>
-                                <a class="collapse-item" href="#">Nova Carteira</a>
+                                <a class="collapse-item" href="{% url 'Endpoint:minhascarteiras' %}">Minhas Carteiras</a>
                             </div>
                         </div>
                     </li>
