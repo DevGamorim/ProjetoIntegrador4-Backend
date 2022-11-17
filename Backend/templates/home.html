@@ -4,33 +4,70 @@
 
 {% block content %}
     <!--<meta http-equiv="refresh" content="5" > -->
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>    
-    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    {% for caixa in caixas %}     
+        <div id="entrada{{caixa.CaixaGrupo.GpName}}" style="height: 370px; width: 100%;"></div>
+        <div id="saida{{caixa.CaixaGrupo.GpName}}" style="height: 370px; width: 100%;"></div>
+    {% endfor %}
+        <script>
+            window.onload = function() {
+            {% for caixa in caixas %}   
+                var entrada{{caixa.CaixaGrupo.GpName}} = new CanvasJS.Chart("entrada{{caixa.CaixaGrupo.GpName}}", {
+                    animationEnabled: true,
+                    title: {
+                        text: "{{caixa.CaixaGrupo.GpName}} - Entrada"
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 240,
+                        yValueFormatString: "##0.00\"%\"",
+                        indexLabel: "{label} {y}",
+                        dataPoints: [
+                            {% for n in financas %}
+                                {% for financa in n %}
+                                    {% if financa.FinancaStats == True %}
+                                        {% if financa.CaixaFinanca.CaixaID == caixa.CaixaID %}
+                                            {% if financa.FinancaType == True %}
+                                                {y: {{financa.Financaporcentagem}}, label: "{{financa.FinancaName}}"},
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        ]
+                    }]
+                });
+                entrada{{caixa.CaixaGrupo.GpName}}.render();
+                
+                var saida{{caixa.CaixaGrupo.GpName}} = new CanvasJS.Chart("saida{{caixa.CaixaGrupo.GpName}}", {
+                    animationEnabled: true,
+                    title: {
+                        text: "{{caixa.CaixaGrupo.GpName}} - Saida"
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 240,
+                        yValueFormatString: "##0.00\"%\"",
+                        indexLabel: "{label} {y}",
+                        dataPoints: [
+                            {% for n in financas %}
+                                {% for financa in n %}
+                                    {% if financa.FinancaStats == True %}
+                                        {% if financa.CaixaFinanca.CaixaID == caixa.CaixaID %}
+                                            {% if financa.FinancaType == False %}
+                                                {y: {{financa.Financaporcentagem}}, label: "{{financa.FinancaName}}"},
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        ]
+                    }]
+                });
+                saida{{caixa.CaixaGrupo.GpName}}.render();
+            {% endfor %}
+            }
+        </script>
+        
 
-    <script>
-        window.onload = function() {
-        
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            title: {
-                text: "Casa"
-            },
-            data: [{
-                type: "pie",
-                startAngle: 240,
-                yValueFormatString: "##0.00\"%\"",
-                indexLabel: "{label} {y}",
-                dataPoints: [
-                    {y: 79.45, label: "Aluguel"},
-                    {y: 7.31, label: "Internet"},
-                    {y: 7.06, label: "Agua"},
-                    {y: 4.91, label: "Compras"},
-                    {y: 1.26, label: "Laser"}
-                ]
-            }]
-        });
-        chart.render();
-        
-        }
-    </script>
 {% endblock %}

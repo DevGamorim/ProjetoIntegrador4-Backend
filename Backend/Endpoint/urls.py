@@ -7,11 +7,11 @@ from . import views
 app_name = 'Endpoint'
 
 urlpatterns =[
-    path('', views.HomePageView.as_view(), name='home' ),
+    path('', views.home, name='home' ),
     path('grupo/', views.group.as_view(), name='grupo' ),
     path('novogrupo/', views.create_group, name='novogrupo' ),
     path('editargrupo/<int:id>/', views.edit_group, name='editargrupo'),
     path('meusgrupos/', views.list_group, name='meusgrupos' ),
     path('minhascarteiras/', views.home_caixas, name='minhascarteiras' ),
-    path('vercarteira/<int:id>/', views.edit_create_financas, name='vercarteira' ),
+    path('vercarteira/<int:id>/', views.create_financas, name='vercarteira' ),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

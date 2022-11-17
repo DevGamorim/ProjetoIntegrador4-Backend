@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}Carteira{% endblock %}
+
+{% block content %}
+
+
+    <div style="display: flex;">
+        <button class="open-button" onclick="openForm()">Adicionar Entrada/Saida</button>
+
+        <p style="text-align: center; margin: 0; margin-left: 15%;  top: 50%; left: 50%;">Total da Carteira: R${{total}}</p>
+    </div>
+    
+    
+
+    <!-- The form -->
+    <div class="form-popup" id="myForm">
+        <form action="/vercarteira/{{id}}/" class="form-container" method='post'>
+            {% csrf_token %}
+            <h2>Novo lançamento</h2>
+            
+            <input style="display: none;" type="text" name="tipo" value="novo">
+
+            <label for="FinancaType"><b>Tipo de Lançamento:</b></label>
+            <select class="form-control" id="FinancaType" name="FinancaType" required>
+                <option value="True">Entrada</option>
+                <option value="False">Saida</option>
+            </select>
+
+            <p style="padding-top: 10px;"></p>  
+
+            <label for="FinancaName"><b>Nome do lançamento:</b></label>
+            <input class="form-control" type="text" name="FinancaName" placeholder="Mercado" required>
+
+            <p style="padding-top: 10px;"></p>            
+
+            <label for="FinancaType"><b>Valor:</b></label>
+            <input class="form-control" type="number" name="FinancaValue" step="0.01" placeholder="00.1" required>
+
+            <p style="padding-top: 10px;"></p>  
+
+            <button type="submit" class="btn">Salvar</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>
+        </form>
+    </div>
+
+    <div style="margin-top: 20px;">
+        {% for financa in financas %}
+            <div class="form-popup" id="myForm{{financa.FinancaID}}">
+                <form action="/vercarteira/{{id}}/" class="form-container" method='post'>
+                    {% csrf_token %}
+                    <h2>Editar {{financa.FinancaName}}</h2>
+                    
+                    <input style="display: none;" type="text" name="tipo" value="{{financa.FinancaID}}">
+
+                    <label for="FinancaType"><b>Tipo de Lançamento:</b></label>
+                    <select class="form-control" id="FinancaType" name="FinancaType" >
+                        <option value="True">Entrada</option>
+                        <option value="False">Saida</option>
+                    </select>
+
+                    <p style="padding-top: 10px;"></p>  
+
+                    <label for="FinancaName"><b>Nome do lançamento:</b></label>
+                    <input class="form-control" type="text" name="FinancaName" placeholder="{{financa.FinancaName}}" >
+
+                    <p style="padding-top: 10px;"></p>            
+
+                    <label for="FinancaType"><b>Valor:</b></label>
+                    <input class="form-control" type="number" name="FinancaValue" step="0.01" placeholder="{{financa.FinancaValue}}">
+
+                    <p style="padding-top: 10px;"></p>  
+
+                    <label for="FinancaStats"><b>Deletar?</b></label>
+                    <select class="form-control" id="FinancaStats" name="FinancaStats">
+                        <option value="True">Não</option>
+                        <option value="False">Sim</option>
+                    </select>
+
+                    <p style="padding-top: 10px;"></p>  
+
+                    <button type="submit" class="btn">Salvar</button>
+                    <button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>
+                </form>
+            </div>
+         {% endfor %}
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Tipo lançamento</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Data</th>
+                <th scope="col"> </th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for financa in financas %}
+                    <tr>
+                        <td>{{financa.FinancaName}}</td>
+                        {% if financa.FinancaType == True %}
+                            <td>Entrada</td>
+                        {% else %}
+                            <td>Saida</td>
+                        {% endif %}
+                        <td>R$ {{financa.FinancaValue}}</td>
+                        <td>{{financa.FinancaUser}}</td>
+                        <td>{{financa.FinancaDateUpdate}}</td>
+                        <td><button onclick="openForm{{financa.FinancaID}}()">Editar</button></td>
+                      </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+         
+    </div>
+    
+
+    <script>
+        function openForm() {
+            if (document.getElementById("myForm").style.display == "none"){
+                document.getElementById("myForm").style.display = "block";
+            } else {
+                document.getElementById("myForm").style.display = "none";
+            }
+            
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+
+        {% for financa in financas %}
+            function openForm{{financa.FinancaID}}() {
+                if (document.getElementById("myForm{{financa.FinancaID}}").style.display == "none"){
+                    document.getElementById("myForm{{financa.FinancaID}}").style.display = "block";
+                } else {
+                    document.getElementById("myForm{{financa.FinancaID}}").style.display = "none";
+                }
+                
+            }
+
+            function closeForm{{financa.FinancaID}}() {
+                document.getElementById("myForm{{financa.FinancaID}}").style.display = "none";
+            }
+        
+
+        {% endfor %}
+    </script>
+
+    
+{% endblock %}
