@@ -7,11 +7,22 @@
 {% block content %}
     <hr class="sidebar-divider my-0">
     <div style="margin-top: 20px;">
-        {% for caixa in caixas %}
-            <p>
-                <a href="/vercarteira/{{caixa.CaixaID}}" >{{caixa.CaixaGrupo.GpName}}</a>
-            </p>
-        {% endfor %}
+        <div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"><h1>Minhas Carteiras</h1></th>
+                  </tr>
+                </thead>
+                <tbody>                    
+                    {% for caixa in caixas %}
+                        <tr>
+                            <td><a href="/vercarteira/{{caixa.CaixaID}}" >{{caixa.CaixaGrupo.GpName}}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
     </div>
     
 {% endblock %}

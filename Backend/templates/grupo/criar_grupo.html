@@ -7,21 +7,21 @@
         {% csrf_token %}
         <div>
             <label>Nome do grupo: </label>
-            <input id="GpName" name="GpName" type="text">
+            <input id="GpName" name="GpName" type="text" class="form-control">
         </div>
         <div>
             <label>Status do Grupo</label>
-            <select id="GpStats" name="GpStats">
+            <select id="GpStats" name="GpStats" class="form-control">
                 <option value="True">Ativo</option>
                 <option value="False">inativo</option>
             </select>
         </div>
-        <div>
+        <div style="padding-bottom: 20px;">
             <label>Adicionar pessoas ao grupo:</label>
-            <input id="GpUse" name="GpUse" type="text" placeholder="joao@email.com">
+            <input id="GpUse" name="GpUse" type="text" placeholder="joao@email.com" class="form-control">
         </div>
         <div>
-            <input type="submit" value="Salvar">
+            <input type="submit" value="Salvar" class="form-control btn btn-success">
         </div>
 
     </form>

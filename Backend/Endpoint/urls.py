@@ -14,4 +14,6 @@ urlpatterns =[
     path('meusgrupos/', views.list_group, name='meusgrupos' ),
     path('minhascarteiras/', views.home_caixas, name='minhascarteiras' ),
     path('vercarteira/<int:id>/', views.create_financas, name='vercarteira' ),
+    path('calcularobjetico/', views.calcular_objetivo, name='calcularobjetico'),
+    path('comentarios/', views.comentarios, name='comentarios'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

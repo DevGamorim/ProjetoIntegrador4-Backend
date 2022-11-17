@@ -6,7 +6,7 @@
 
 
     <div style="display: flex;">
-        <button class="open-button" onclick="openForm()">Adicionar Entrada/Saida</button>
+        <button class="btn btn-primary" onclick="openForm()">Adicionar Entrada/Saida</button>
 
         <p style="text-align: center; margin: 0; margin-left: 15%;  top: 50%; left: 50%;">Total da Carteira: R${{total}}</p>
     </div>
@@ -107,7 +107,7 @@
                         <td>R$ {{financa.FinancaValue}}</td>
                         <td>{{financa.FinancaUser}}</td>
                         <td>{{financa.FinancaDateUpdate}}</td>
-                        <td><button onclick="openForm{{financa.FinancaID}}()">Editar</button></td>
+                        <td><button class="btn btn-dark" onclick="openForm{{financa.FinancaID}}()">Editar</button></td>
                       </tr>
                 {% endfor %}
             </tbody>
@@ -119,6 +119,11 @@
     <script>
         function openForm() {
             if (document.getElementById("myForm").style.display == "none"){
+                {% for financa in financas %}
+                    if (document.getElementById("myForm{{financa.FinancaID}}").style.display == "block"){
+                        document.getElementById("myForm{{financa.FinancaID}}").style.display = "none"
+                    }
+                {% endfor %}
                 document.getElementById("myForm").style.display = "block";
             } else {
                 document.getElementById("myForm").style.display = "none";
@@ -132,15 +137,19 @@
 
         {% for financa in financas %}
             function openForm{{financa.FinancaID}}() {
+                
                 if (document.getElementById("myForm{{financa.FinancaID}}").style.display == "none"){
+                    document.getElementById("myForm").style.display = "none";
                     document.getElementById("myForm{{financa.FinancaID}}").style.display = "block";
                 } else {
+                    document.getElementById("myForm").style.display = "none";
                     document.getElementById("myForm{{financa.FinancaID}}").style.display = "none";
                 }
                 
             }
 
             function closeForm{{financa.FinancaID}}() {
+                document.getElementById("myForm").style.display = "none";
                 document.getElementById("myForm{{financa.FinancaID}}").style.display = "none";
             }
         

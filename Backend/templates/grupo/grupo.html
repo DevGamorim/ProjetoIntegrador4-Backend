@@ -3,17 +3,30 @@
 {% block title %}Grupos{% endblock %}
 
 {% block content %}
-    <div>
-        <div><a href="{% url 'Endpoint:novogrupo' %}">Novo Grupo</a></div>
-        <div><a href="{% url 'Endpoint:meusgrupos' %}">Meus Grupos</a></div>
+    <div class="container" style="padding-bottom: 20px;">
+        <div class="row">
+            <div class="col-sm"><a href="{% url 'Endpoint:novogrupo' %}">Novo Grupo</a></div>
+            <div class="col-sm"><a href="{% url 'Endpoint:meusgrupos' %}">Meus Grupos</a></div>
+        </div>        
     </div>
     <hr class="sidebar-divider my-0">
     <div style="margin-top: 20px;">
-        {% for gp in grupos %}
-            <p>
-                <a href="/editargrupo/{{gp.Groups.GpId}}" >{{gp.Groups.GpName}}</a>
-            </p>
-        {% endfor %}
+        <div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"><h1>Meus Grupos</h1></th>
+                  </tr>
+                </thead>
+                <tbody>                    
+                    {% for gp in grupos %}
+                        <tr>
+                            <td><a href="/editargrupo/{{gp.Groups.GpId}}" >{{gp.Groups.GpName}}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
     </div>
     
 {% endblock %}

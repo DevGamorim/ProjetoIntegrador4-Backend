@@ -8,24 +8,24 @@
 
         <p>
             <label>Nome do Grupo: </label>
-            <input type="text" id="GpName" name="GpName" value="{{grupo.GpName}}" class="control-form"/>
+            <input type="text" id="GpName" name="GpName" value="{{grupo.GpName}}" class="form-control"/>
         </p>
         <p>
             <label>Status do Grupo</label>
-            <select id="GpStats" name="GpStats" class="control-form">
+            <select id="GpStats" name="GpStats" class="form-control">
                 <option value="True">Ativo</option>
                 <option value="False">inativo</option>
             </select>
         </p>
         <p>
             <label>Pessoas ao grupo:</label>
-            <input id="GpUse" name="GpUse" type="text" value="{{all_users}}" class="control-form"/>
+            <input id="GpUse" name="GpUse" type="text" value="{{all_users}}" class="form-control"/>
             <p style="color: red;">
                 ** Para remover ou adicionar novas pessoas ao grupo, basta remove-los ou adiciona-los a lista **
             </p>
         </p>
         <p>
-            <input type="submit" value="Salvar">
+            <input type="submit" value="Salvar" class="form-control btn btn-success">
         </p>
     </form>
 

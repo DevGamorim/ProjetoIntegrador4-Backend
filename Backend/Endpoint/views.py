@@ -16,12 +16,49 @@ import requests
 from datetime import datetime
 import json
 
+#Libs para ia
 
-#url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial=18/10/2022&dataFinal=18/10/2022"
-#response = requests.request("GET", url)
-#response = response.text.encode('utf8')
-#response = json.loads(response)
-#print(response)
+#Importando bibliotenas
+import string
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import pickle
+from wordcloud import WordCloud
+
+# Pré-processamento e avaliação
+from nltk.corpus import stopwords
+from nltk.stem.snowball import SnowballStemmer
+from nltk.stem.wordnet import WordNetLemmatizer
+from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
+from sklearn.preprocessing import LabelBinarizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import confusion_matrix, classification_report
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.regularizers import l1, l2
+
+# Modelos
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import BernoulliNB
+
+
+url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial=18/10/2022&dataFinal=18/10/2022"
+response = requests.request("GET", url)
+response = response.text.encode('utf8')
+response = json.loads(response)
+print(response)
+
+selicc = Selic.objects.get(pk=1)
+selicc.Slvalue = float(response[0]['valor'])
+selicc.save()
+
 
 #@method_decorator(login_required, name='dispatch')
 class HomePageView(TemplateView):
@@ -296,3 +333,69 @@ def create_financas(request, id):
                 return render(request, 'caixa/ver_caixa.html',{"financas" : financas,"id":id, "total": caixa.CaixaTotal})
 
     return render(request, 'caixa/ver_caixa.html',{"financas" : financas,"id":id, "total": caixa.CaixaTotal})
+
+def calc_juros_compostos(principal, periodo, juros): 
+    """ CALCULADORA DE JUROS COMPOSTOS """
+    montante = principal * ((1 + juros/100)**periodo)
+    juros = montante-principal
+    
+    resultado = [round(juros, 2),round(montante, 2)]
+    return resultado
+
+@login_required
+def calcular_objetivo(request):
+    if request.method == 'GET':
+
+        return render(request, 'caixa/calculo.html')
+    if request.method == 'POST':
+        tudo = request.POST.copy()            
+        principal = float(tudo['principal'])
+        periodo = int(tudo['periodo'])
+        juros = float(tudo['juros'])
+
+        resultado = calc_juros_compostos(principal, periodo, juros)
+
+        return render(request, 'caixa/calculo.html',{"juros" : (resultado[0]),"montante":resultado[1], "total": principal,"periodo":periodo,"jurosmes": juros,})
+    
+
+# Regressão Logística
+def ml_predict(text):
+    clean_text = cleaning(text)
+    tfid_matrix = tfid.transform([clean_text])
+    pred = log.predict(tfid_matrix)[0]
+    
+    return pred
+
+# Rede Neural
+def dl_predict(text):
+    clean_text = cleaning(text)
+    seq = tokenizer.texts_to_sequences([clean_text])
+    padded = pad_sequences(seq)
+
+    pred = model.predict(padded)
+    # Recuperar o nome do rótulo
+    result = lb.inverse_transform(pred)[0]
+    
+    return result
+
+@login_required
+def comentarios(request):
+    user = request.user
+    if request.method == 'GET':
+        try:
+            coments = Comentario.objects.filter(CmUser=user)
+        except:
+            coments = ''
+        return render(request, 'comentarios.html')
+    if request.method == 'POST':
+        tudo = request.POST.copy()
+        
+        coments = Comentario.objects.create(CmUser=user, CmMessage=tudo['mensagem'],CmScore=float(tudo['score']))
+
+        try:
+            coments = Comentario.objects.filter(CmUser=user)
+        except:
+            coments = ''
+
+        return render(request, 'comentarios.html',{"coments" : coments})
+    

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Comentarios{% endblock %}
+
+{% block content %}
+    
+        <div class="container" style="padding-bottom: 20px;">
+            <form action="{% url 'Endpoint:comentarios' %}" method='post'>
+                <div class="row">                                
+                    <div class="col-sm">
+                        {% csrf_token %}
+                        <label>Digite seu comentario: </label>
+                        <textarea class="form-control" id="mensagem" name="mensagem" type="area"></textarea>
+                    </div>
+                    <div class="col-sm">
+                        <label>Nota para o sistema:</label>
+                        <input class="form-control" id="score" name="score" type="range" min="0" max="5">
+                    </div>
+                    <div class="col-sm">
+                        <label>- -</label>
+                        <input class="form-control btn btn-primary" type="submit" value="Calcular">
+                    </div> 
+                </div>
+            </form>
+        </div>
+    
+
+    <div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nota</th>
+                <th scope="col">Mensagem</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for coment in coments %}
+                    <tr>
+                        <td>{{coment.CmScore}}</td>
+                        <td>{{coment.CmMessage}}</td>
+                    </tr>
+                {% endfor %}      
+            </tbody>
+          </table>
+    </div>
+{% endblock %}
