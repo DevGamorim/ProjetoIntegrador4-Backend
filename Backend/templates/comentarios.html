@@ -12,10 +12,10 @@
                         <label>Digite seu comentario: </label>
                         <textarea class="form-control" id="mensagem" name="mensagem" type="area"></textarea>
                     </div>
-                    <div class="col-sm">
+                    <!-- <div class="col-sm">
                         <label>Nota para o sistema:</label>
                         <input class="form-control" id="score" name="score" type="range" min="0" max="5">
-                    </div>
+                    </div> -->
                     <div class="col-sm">
                         <label>- -</label>
                         <input class="form-control btn btn-primary" type="submit" value="Calcular">
@@ -29,15 +29,17 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">Nota</th>
                 <th scope="col">Mensagem</th>
+                <th scope="col">Mensagem traduzida</th>
+                <th scope="col">Nota IA Logis</th>
               </tr>
             </thead>
             <tbody>
                 {% for coment in coments %}
                     <tr>
-                        <td>{{coment.CmScore}}</td>
                         <td>{{coment.CmMessage}}</td>
+                        <td>{{coment.CmMessageEnglish}}</td>
+                        <td>{{coment.CmScoreIA_logistica}}</td>
                     </tr>
                 {% endfor %}      
             </tbody>

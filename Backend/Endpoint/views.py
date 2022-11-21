@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
+
 # Create your views here.
 
 from Data.models import Financas, Groups, Caixas, Comentario, Selic, UserGroups, Caixas
@@ -15,38 +16,10 @@ from users.models import User
 import requests
 from datetime import datetime
 import json
+from deep_translator import GoogleTranslator
 
-#Libs para ia
-
-#Importando bibliotenas
-import string
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import tensorflow as tf
-import pickle
-from wordcloud import WordCloud
-
-# Pré-processamento e avaliação
-from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer
-from nltk.stem.wordnet import WordNetLemmatizer
-from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
-from sklearn.preprocessing import LabelBinarizer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import confusion_matrix, classification_report
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.regularizers import l1, l2
-
-# Modelos
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import BernoulliNB
+#import ia
+from Endpoint.ia import rating, cleaning, ml_predict, dl_predict
 
 
 url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial=18/10/2022&dataFinal=18/10/2022"
@@ -357,27 +330,6 @@ def calcular_objetivo(request):
 
         return render(request, 'caixa/calculo.html',{"juros" : (resultado[0]),"montante":resultado[1], "total": principal,"periodo":periodo,"jurosmes": juros,})
     
-
-# Regressão Logística
-def ml_predict(text):
-    clean_text = cleaning(text)
-    tfid_matrix = tfid.transform([clean_text])
-    pred = log.predict(tfid_matrix)[0]
-    
-    return pred
-
-# Rede Neural
-def dl_predict(text):
-    clean_text = cleaning(text)
-    seq = tokenizer.texts_to_sequences([clean_text])
-    padded = pad_sequences(seq)
-
-    pred = model.predict(padded)
-    # Recuperar o nome do rótulo
-    result = lb.inverse_transform(pred)[0]
-    
-    return result
-
 @login_required
 def comentarios(request):
     user = request.user
@@ -386,11 +338,31 @@ def comentarios(request):
             coments = Comentario.objects.filter(CmUser=user)
         except:
             coments = ''
-        return render(request, 'comentarios.html')
+
+        return render(request, 'comentarios.html',{"coments" : coments})
     if request.method == 'POST':
         tudo = request.POST.copy()
+
+        traduzido = tudo['mensagem']
         
-        coments = Comentario.objects.create(CmUser=user, CmMessage=tudo['mensagem'],CmScore=float(tudo['score']))
+        try:
+            traduzido = GoogleTranslator(source='portuguese', target='english').translate(traduzido)
+        except:
+            traduzido = tudo['mensagem']
+
+        #try:
+        logistica = ml_predict(traduzido)
+        #except:
+        #    logistica = None
+        
+        #try:
+        neural = dl_predict(traduzido)
+        #except:
+        #    neural = None
+
+        print(traduzido,logistica,neural)
+
+        coments = Comentario.objects.create(CmUser=user, CmMessage=tudo['mensagem'],CmScore=0, CmMessageEnglish = traduzido, CmScoreIA_logistica= logistica, CmScoreIA_neural= neural)
 
         try:
             coments = Comentario.objects.filter(CmUser=user)
@@ -398,4 +370,3 @@ def comentarios(request):
             coments = ''
 
         return render(request, 'comentarios.html',{"coments" : coments})
-    

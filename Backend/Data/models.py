@@ -59,6 +59,9 @@ class Comentario(models.Model):
     CmUser = models.ForeignKey(User, on_delete=models.CASCADE)
     CmMessage = models.CharField(max_length=255)
     CmScore = models.FloatField()
+    CmMessageEnglish = models.CharField(max_length=255, null=True)
+    CmScoreIA_logistica = models.CharField(max_length=15, null=True)
+    CmScoreIA_neural = models.CharField(max_length=15, null=True)
 
 class Selic(models.Model):
     SlID = models.AutoField(primary_key=True, editable=False, auto_created=True)
